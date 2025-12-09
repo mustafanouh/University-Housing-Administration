@@ -46,7 +46,7 @@ export default function Payments() {
         <Box
             sx={{
                 minHeight: "100vh",
-                bgcolor: "grey.50",
+         
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -56,12 +56,17 @@ export default function Payments() {
         >
             <Card
                 sx={{
-                    maxWidth: 520,
+                    maxWidth: 1100,
                     width: "100%",
                     borderRadius: 4,
                     overflow: "hidden",
                     boxShadow: "0 12px 40px rgba(0,0,0,0.12)",
                     bgcolor: "background.paper",
+                      transition: "all 0.3s ease",
+                    "&:hover": {
+                        transform: "translateY(-8px)",
+                        boxShadow: "0 30px 60px rgba(0,0,0,0.15)",
+                    },
                 }}
             >
                 {/* Header */}

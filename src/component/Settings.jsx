@@ -24,7 +24,7 @@ import {
 import { useThemeContext } from "../theme/themeContext";
 
 export default function Settings() {
-  const { mode, primaryColor, language, toggleMode,  setLanguage } =
+  const { mode, primaryColor, language, toggleMode, setLanguage } =
     useThemeContext();
 
   const isDark = mode === "dark";
@@ -33,7 +33,7 @@ export default function Settings() {
     <Box
       sx={{
         minHeight: "100vh",
-        bgcolor: "grey.50",
+
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -42,12 +42,17 @@ export default function Settings() {
     >
       <Card
         sx={{
-          maxWidth: 560,
+          maxWidth: 1100,
           width: "100%",
           borderRadius: 4,
           overflow: "hidden",
           boxShadow: "0 12px 40px rgba(0,0,0,0.12)",
           bgcolor: "background.paper",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            transform: "translateY(-8px)",
+            boxShadow: "0 30px 60px rgba(0,0,0,0.15)",
+          },
         }}
       >
         {/* Header */}
@@ -95,11 +100,11 @@ export default function Settings() {
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Avatar sx={{ bgcolor:  "primary.main" }}>
+                <Avatar sx={{ bgcolor: "primary.main" }}>
                   {isDark ? <DarkMode /> : <LightMode />}
                 </Avatar>
                 <Box>
-                  <Typography  fontWeight="bold" variant="h6">
+                  <Typography fontWeight="bold" variant="h6">
                     Dark Mode
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -158,7 +163,7 @@ export default function Settings() {
                   </MenuItem>
                 </Select>
               </FormControl>
-            </Box>     
+            </Box>
           </Stack>
         </Box>
       </Card>

@@ -28,7 +28,7 @@ export default function UserProfile() {
   };
 
   return (
-    <Box sx={{ p: { xs: 2, md: 4 }, minHeight: "100vh", bgcolor: "#f5f7fa", borderRadius: 3, }}>
+    <Box sx={{ p: { xs: 2, md: 4 }, minHeight: "100vh", }}>
 
 
       <Card
@@ -38,6 +38,11 @@ export default function UserProfile() {
           borderRadius: 3,
           overflow: "hidden",
           boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            transform: "translateY(-8px)",
+            boxShadow: "0 30px 60px rgba(0,0,0,0.15)",
+          },
         }}
       >
         <Box
@@ -74,7 +79,7 @@ export default function UserProfile() {
         <Box sx={{ p: { xs: 3, sm: 5 } }}>
           <Grid container spacing={4}>
             {/* Left Column - Main Info */}
-            <Grid item xs={12} md={6}>
+            <Grid  size={{ xs: 12 ,md: 6}}>
               <Stack spacing={3.5}>
                 <InfoRow label="Major" value={user.major} />
                 <InfoRow label="City" value={user.city} />
@@ -84,7 +89,7 @@ export default function UserProfile() {
             </Grid>
 
             {/* Right Column - ID & Contact */}
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12 ,md: 6}}>
               <Stack spacing={3.5}>
                 <InfoRow label="ID Number" value={user.idNumber} />
                 <InfoRow label="Phone Number" value={user.phone} />

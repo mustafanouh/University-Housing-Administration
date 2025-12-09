@@ -24,6 +24,7 @@ import AddCommentTwoToneIcon from '@mui/icons-material/AddCommentTwoTone';
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 
+import SupportAgent from '@mui/icons-material/SupportAgent';
 // notfications
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
@@ -109,6 +110,7 @@ const navigate = useNavigateContext();
     { text: "Construction", icon: <ConstructionOutlinedIcon />, path: "/Construction" },
     { text: "AccommodationForm", icon: <AddCommentTwoToneIcon />, path: "/accommodation-form" },
     { text: "Payments", icon: <PaymentsOutlinedIcon />, path: "/payments" },
+    {text :"Contact",icon:<SupportAgent/>,path:"/Contact"},
     { text: "Settings", icon: <SettingsOutlinedIcon />, path: "/Settings" },
     { text: "Logout", icon: <LogoutOutlinedIcon />, path: "/logout" },
 

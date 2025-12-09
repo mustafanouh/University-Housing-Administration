@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Box,
     Card,
@@ -39,7 +39,7 @@ export default function ConstructionRequest() {
 
     const handleSubmit = async () => {
         if (!title || !description) {
-            alert("يرجى ملء العنوان والوصف");
+            alert("Please fill in the title and description");
             return;
         }
 
@@ -49,11 +49,11 @@ export default function ConstructionRequest() {
         formData.append("description", description);
         if (image) formData.append("image", image);
 
-        // محاكاة إرسال
+       
         setTimeout(() => {
-            
+
             setLoading(false);
-        
+
         }, 2000);
     };
 
@@ -61,7 +61,7 @@ export default function ConstructionRequest() {
         <Box
             sx={{
                 minHeight: "100vh",
-                background: "white",
+
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -71,7 +71,7 @@ export default function ConstructionRequest() {
             <Card
                 raised
                 sx={{
-                    maxWidth: 560,
+                    maxWidth: 1100,
                     width: "100%",
                     borderRadius: 4,
                     overflow: "hidden",
@@ -85,7 +85,7 @@ export default function ConstructionRequest() {
                     },
                 }}
             >
-                {/* Header مع أيقونة */}
+                {/* Header  */}
                 <Box
                     sx={{
                         background: "linear-gradient(45deg, #2f973b, #044d23)",
@@ -117,7 +117,7 @@ export default function ConstructionRequest() {
                 <Box sx={{ p: { xs: 3, sm: 5 } }}>
                     <Stack spacing={4}>
 
-                      
+
                         <TextField
                             label="Title of the issue"
                             variant="outlined"
@@ -130,7 +130,7 @@ export default function ConstructionRequest() {
                             }}
                         />
 
-                   
+
                         <Box>
                             <input
                                 accept="image/*"
@@ -163,7 +163,7 @@ export default function ConstructionRequest() {
                                 </Button>
                             </label>
 
-                           
+
                             {imagePreview && (
                                 <Box sx={{ mt: 2, textAlign: "center" }}>
                                     <img
@@ -193,7 +193,7 @@ export default function ConstructionRequest() {
                             }}
                         />
 
-                        {/* زر الإرسال */}
+                   
                         <Button
                             variant="contained"
                             size="large"
@@ -217,7 +217,7 @@ export default function ConstructionRequest() {
                                 boxShadow: "0 10px 20px rgba(102, 126, 234, 0.3)",
                             }}
                         >
-                            {loading ? "جاري الإرسال..." : "إرسال الطلب"}
+                            {loading ? " Sending ..." : " Send Requests"}
                         </Button>
 
                         {loading && <LinearProgress sx={{ borderRadius: 2 }} />}

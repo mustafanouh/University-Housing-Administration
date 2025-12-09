@@ -1,4 +1,3 @@
-
 // material ui
 import { styled, alpha } from '@mui/material/styles';
 import {
@@ -41,6 +40,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
 }));
+
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     width: '100%',
@@ -48,10 +48,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
+        [theme.breakpoints.up('xs')]: {
+            width: '0ch',
+            '&:focus': {
+                width: '15ch',
+            },
+        },
         [theme.breakpoints.up('sm')]: {
             width: '12ch',
             '&:focus': {
                 width: '20ch',
+            },
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+            '&:focus': {
+                width: '30ch',
             },
         },
     },
@@ -79,29 +91,37 @@ const AppBar = styled(MuiAppBar, {
 export default function Header({ open, handleDrawerOpen }) {
     const [count, setCount] = useState(4);
     const navigate = useNavigate();
-  
 
     return (
-
-        <AppBar
-
-        
-            position="fixed" open={open}>
+        <AppBar position="fixed" open={open}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                {/* Left Section: Menu + Title */}
                 <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                     <IconButton
-
                         onClick={handleDrawerOpen}
                         edge="start"
-                        sx={[{ marginRight: 5, color:"iconPrimary"}, open && { display: 'none' }]}
+                        sx={[
+                            { marginRight: 5, color: "inherit" },
+                            open && { display: { xs: 'block', sm: 'none' } }, // Show menu only when drawer is closed on small screens
+                        ]}
                     >
                         <MenuIcon />
                     </IconButton>
 
-                    <Typography variant="h6" noWrap>University Housing Administration</Typography>
+                    <Typography variant="h6" noWrap component="div" sx={{ 
+                        display: { xs: 'none', sm: 'block' } // Hide title on very small screens if needed
+                    }}>
+                        University Housing Administration
+                    </Typography>
                 </Box>
 
-                <Search>
+                {/* Center: Search Bar - Responsive */}
+                <Search sx={{
+                    display: { xs: 'none', sm: 'flex' }, // Hide search on xs, show from sm+
+                    flexGrow: { md: 1 },
+                    maxWidth: { md: 500 },
+                    mx: { md: 4 },
+                }}>
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>
@@ -111,31 +131,30 @@ export default function Header({ open, handleDrawerOpen }) {
                     />
                 </Search>
 
+                {/* Right Section: Icons */}
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {/* Mobile Search Icon (visible only on xs) */}
+                    <IconButton sx={{ display: { xs: 'flex', sm: 'none' }, color: 'inherit' }}>
+                        <SearchIcon />
+                    </IconButton>
 
-
-                <Box sx={{}} >
-                    <Badge badgeContent={count} color='secondary'
-                        style={{ cursor: "pointer", marginRight: 10 }}
-                    >
+                    <Badge badgeContent={count} color="secondary" sx={{ mx: 1 }}>
                         <NotificationsNoneOutlinedIcon
                             onClick={() => navigate("/notifications")}
-
+                            sx={{ cursor: "pointer", fontSize: 28 }}
                         />
                     </Badge>
 
                     <AccountCircleOutlinedIcon
-                        style={{ cursor: "pointer", marginRight: 10 }}
                         onClick={() => navigate("/account")}
+                        sx={{ cursor: "pointer", fontSize: 28, mx: 1 }}
                     />
+
                     <SettingsOutlinedIcon
-                        style={{ cursor: "pointer", marginRight: 10 }}
                         onClick={() => navigate("/settings")}
+                        sx={{ cursor: "pointer", fontSize: 28, mx: 1 }}
                     />
-
-
                 </Box>
-
-
             </Toolbar>
         </AppBar>
     );

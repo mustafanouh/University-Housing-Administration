@@ -18,6 +18,7 @@ import ConstructionRequest from "./component/ConstructionRequest";
 import UserProfile from "./component/Account";
 
 import Notifications from "./component/Notifications";
+import Contact from "./component/Contact";
 
 
 
@@ -41,6 +42,7 @@ export default function AppRoutes() {
       <Route path="/Construction" element={<ConstructionRequest />} />
       <Route path="/Settings" element={<Settings />} />
       <Route path="/Account" element={<UserProfile />} />
+      <Route path="/Contact" element={<Contact />} />
     
 
       {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}

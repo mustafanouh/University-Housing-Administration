@@ -30,7 +30,7 @@ export default function Logout() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "background.default",
+       height: '100vh',
         p: 2,
       }}
     >
