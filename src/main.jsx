@@ -9,6 +9,7 @@ createRoot(document.getElementById('root')).render(
   <CookiesProvider>
   <StrictMode>
     <BrowserRouter>
+    
       <App />
     </BrowserRouter>
   </StrictMode>

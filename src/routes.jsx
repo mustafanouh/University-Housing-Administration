@@ -2,11 +2,25 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-import Dashboard from "./pages/Dashboard";
+
 // import Profile from "./pages/Profile";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Logout from "./pages/auth/Logout";
+
+import AccommodationForm from "./component/AccommodationForm";
+
+
+import Payments from "./component/Payments";
+import PaymentsHistory from "./component/PaymentsHistory"
+import Settings from "./component/Settings";
+import ConstructionRequest from "./component/ConstructionRequest";
+import UserProfile from "./component/Account";
+
+import Notifications from "./component/Notifications";
+
+
+
 
 function ProtectedRoute({ children }) {
   const [cookies] = useCookies(["token"]);
@@ -19,8 +33,16 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/logout" element={<ProtectedRoute><Logout /></ProtectedRoute>} />
+      <Route path="/logout" element={<Logout />} />
+      <Route path="/accommodation-form" element={<AccommodationForm />} />
+      <Route path="/Notifications" element={<Notifications />} />
+      <Route path="/payments" element={<Payments />} />
+      <Route path="/payments-history" element={<PaymentsHistory />} />
+      <Route path="/Construction" element={<ConstructionRequest />} />
+      <Route path="/Settings" element={<Settings />} />
+      <Route path="/Account" element={<UserProfile />} />
+    
+
       {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
     </Routes>
   );

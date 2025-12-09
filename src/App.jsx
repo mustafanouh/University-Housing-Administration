@@ -1,26 +1,33 @@
 import React from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import { useLocation } from "react-router-dom";
-import theme from "./theme";
+import { useLocation, useNavigate } from "react-router-dom";
 import AppRoutes from "./routes.jsx";
-import DashboardLayout from "./component/DashboardLayout.jsx";
+import DashboardLayout from "./pages/DashboardLayout.jsx";
+import { ThemeProviderContext } from "./theme/themeContext.jsx";
+import CustomThemeProvider from "./theme/themeProvider.jsx";
+
+import { NavigateContext } from "./context/navigateContext.jsx";
+
+
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const noLayoutPaths = ["/login", "/register", "/logout"];
   const showLayout = !noLayoutPaths.includes(location.pathname);
 
+
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      
+    <ThemeProviderContext>
+      <CustomThemeProvider>
+        <NavigateContext.Provider value={navigate}>
+          <DashboardLayout>
+            <AppRoutes />
+          </DashboardLayout>
+        </NavigateContext.Provider>
 
-       <DashboardLayout>
-          <AppRoutes />
-        </DashboardLayout>
-
-      {/* {showLayout ? (
+        {/* {showLayout ? (
         <DashboardLayout>
           <AppRoutes />
         </DashboardLayout>
@@ -28,7 +35,8 @@ function App() {
         <AppRoutes />
       )} */}
 
-    </ThemeProvider>
+      </CustomThemeProvider>
+    </ThemeProviderContext>
   );
 }
 
