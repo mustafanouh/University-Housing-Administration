@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, CssBaseline } from '@mui/material';
-import { useTheme } from "@mui/material/styles";
-import { useThemeContext } from '../theme/themeContext.jsx';
 import Drawer from '../component/Drawer'; 
 import Header from '../component/Header';
 
@@ -17,7 +15,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout({ children }) {
   const [open, setOpen] = React.useState(false);
-     const { colors } = useThemeContext();
+  
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
