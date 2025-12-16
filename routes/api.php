@@ -22,6 +22,16 @@ Route::prefix("std")->group(function () {
 
 Route::group(["middleware" => "auth:employee"] , function () {
 
+// Admin Routes ::
+    Route::group(["auth:admin"] , function () {
+
+    });
+
+// Mentor Routes ::
+    Route::group(["auth:mentor"] , function () {
+
+    });
+
     Route::post("logout", [authController::class, "logout"]);
 
 });
