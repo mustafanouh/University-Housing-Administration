@@ -102,14 +102,16 @@ export default function Header({ open, handleDrawerOpen }) {
                         edge="start"
                         sx={[
                             { marginRight: 5, color: "inherit" },
-                            open && { display: { xs: 'block', sm: 'none' } }, // Show menu only when drawer is closed on small screens
+                            open && { display: 'none' },
                         ]}
                     >
                         <MenuIcon />
                     </IconButton>
 
-                    <Typography variant="h6" noWrap component="div" sx={{ 
-                        display: { xs: 'none', sm: 'block' } // Hide title on very small screens if needed
+                    <Typography variant="h6" noWrap sx={{
+
+                        fontSize: { xs: 16, sm: 20, md: 24 }
+                        , fontWeight: 'bold'
                     }}>
                         University Housing Administration
                     </Typography>
@@ -117,9 +119,9 @@ export default function Header({ open, handleDrawerOpen }) {
 
                 {/* Center: Search Bar - Responsive */}
                 <Search sx={{
-                    display: { xs: 'none', sm: 'flex' }, // Hide search on xs, show from sm+
+                    display: { xs: 'none', md: 'flex' },
                     flexGrow: { md: 1 },
-                    maxWidth: { md: 500 },
+                    maxWidth: { md: 200 },
                     mx: { md: 4 },
                 }}>
                     <SearchIconWrapper>
@@ -134,25 +136,25 @@ export default function Header({ open, handleDrawerOpen }) {
                 {/* Right Section: Icons */}
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {/* Mobile Search Icon (visible only on xs) */}
-                    <IconButton sx={{ display: { xs: 'flex', sm: 'none' }, color: 'inherit' }}>
+                    <IconButton sx={{ display: { xs: 'flex', md: 'none' }, color: 'inherit' }}>
                         <SearchIcon />
                     </IconButton>
 
-                    <Badge badgeContent={count} color="secondary" sx={{ mx: 1 }}>
+                    <Badge badgeContent={count} color="secondary" sx={{ mr: 1 }}>
                         <NotificationsNoneOutlinedIcon
                             onClick={() => navigate("/notifications")}
-                            sx={{ cursor: "pointer", fontSize: 28 }}
+                            sx={{ cursor: "pointer", fontSize: { xs: 22, sm: 25, md: 28 } }}
                         />
                     </Badge>
 
                     <AccountCircleOutlinedIcon
                         onClick={() => navigate("/account")}
-                        sx={{ cursor: "pointer", fontSize: 28, mx: 1 }}
+                        sx={{ cursor: "pointer", fontSize: { xs: 22, sm: 25, md: 28 }, mx: 1 }}
                     />
 
                     <SettingsOutlinedIcon
                         onClick={() => navigate("/settings")}
-                        sx={{ cursor: "pointer", fontSize: 28, mx: 1 }}
+                        sx={{ cursor: "pointer", fontSize: { xs: 22, sm: 25, md: 28 }, mx: 1 }}
                     />
                 </Box>
             </Toolbar>

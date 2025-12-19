@@ -5,7 +5,9 @@ import { Box, Paper, Typography, Button } from "@mui/material";
 import Backdrop from '@mui/material/Backdrop';
 import { useNavigateContext } from "../../context/navigateContext";
 export default function Logout() {
+
   const [cookies, , removeCookie] = useCookies(["token"]);
+  
   const navigate = useNavigateContext();
 
 

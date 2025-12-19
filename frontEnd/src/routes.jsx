@@ -1,6 +1,9 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { Routes, Route } from "react-router-dom";
+
+import { useNavigateContext } from "./context/navigateContext";
+// get cookies
+import Cookies from "js-cookie";
 
 
 // import Profile from "./pages/Profile";
@@ -24,12 +27,13 @@ import Contact from "./component/Contact";
 
 
 function ProtectedRoute({ children }) {
-  const [cookies] = useCookies(["token"]);
-  if (!cookies.token) return <Navigate to="/dashboard" />;
+  const cookies = Cookies.get(); 
+  if (!cookies.token) return <Navigate to="/login" />;
   return children;
 }
 
 export default function AppRoutes() {
+  const Navigate = useNavigateContext();
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
@@ -42,10 +46,9 @@ export default function AppRoutes() {
       <Route path="/Construction" element={<ConstructionRequest />} />
       <Route path="/Settings" element={<Settings />} />
       <Route path="/Account" element={<UserProfile />} />
-      <Route path="/Contact" element={<Contact />} />
-    
+      <Route path="/Contact" element={<Contact />} />   
 
-      {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
+      <Route path="*" element={<Navigate to="/dashboard" />} />
     </Routes>
   );
 }
