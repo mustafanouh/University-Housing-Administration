@@ -13,18 +13,18 @@ import {
   Avatar,
   IconButton,
   InputAdornment,
-  Grid, // هذا الآن Grid v2 في MUI v6+ (لا يحتاج item أو xs/sm مباشرة)
+  Grid,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
 import { Visibility, VisibilityOff, PersonAddOutlined } from "@mui/icons-material";
 
 export default function Register() {
-
+  // Fields exactly matching Laravel validation rules
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
-    country: "",
+    address: "",         
     mobile: "",
     email: "",
     password: "",
@@ -33,28 +33,30 @@ export default function Register() {
     unit_id: "",
   });
 
+  // To display Laravel validation errors
+  const [validationErrors, setValidationErrors] = useState({});
 
   const {
-    mutate: registerMutation,  // هنا بنستخرج الدالة ونسميها زي ما نحب
-    isPending,                 // للـ loading
+    mutate: registerMutation,
+    isPending,
     isError,
     error,
-    data,                      // الـ response (فيه token و user)
-    isSuccess
+    isSuccess,
   } = useRegister();
 
-
-
   const [showPassword, setShowPassword] = useState(false);
-
   const theme = useTheme();
   const navigate = useNavigate();
-
-  // للتحكم في التجاوب
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    // Clear error for this field as soon as user types
+    if (validationErrors[name]) {
+      setValidationErrors({ ...validationErrors, [name]: undefined });
+    }
   };
 
   const handleTogglePassword = () => {
@@ -63,8 +65,19 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerMutation(form);
+    setValidationErrors({}); 
 
+    registerMutation(form, {
+      onError: (err) => {
+        if (err.response?.status === 422) {
+          setValidationErrors(err.response.data.errors || {});
+        }
+      },
+      onSuccess: () => {
+       
+        setTimeout(() => navigate("/dashboard"), 1000);
+      },
+    });
   };
 
   return (
@@ -76,9 +89,8 @@ export default function Register() {
         justifyContent: "center",
         background: `linear-gradient(135deg, ${theme.palette.primary.main}22 0%, ${theme.palette.secondary.main}22 100%), ${theme.palette.background.default}`,
         p: { xs: 2, sm: 3, md: 4 },
-        bgcolor: '#639147'
+        bgcolor: "#639147",
       }}
-
     >
       <Paper
         elevation={12}
@@ -104,29 +116,17 @@ export default function Register() {
             <PersonAddOutlined fontSize={isMobile ? "medium" : "large"} />
           </Avatar>
 
-          <Typography
-            component="h1"
-            variant={isMobile ? "h5" : "h4"}
-            fontWeight="bold"
-            gutterBottom
-            textAlign="center"
-          >
-            Sign Up
+          <Typography component="h1" variant={isMobile ? "h5" : "h4"} fontWeight="bold" gutterBottom textAlign="center">
+            Create New Account
           </Typography>
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            mb={3}
-            textAlign="center"
-            px={2}
-          >
-            Create your account to get started
+          <Typography variant="body2" color="text.secondary" mb={3} textAlign="center" px={2}>
+            Fill in your details to get started
           </Typography>
 
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: "100%" }}>
             <Grid container spacing={isMobile ? 1.5 : 2}>
-              {/* تم إزالة item و xs/sm - الآن size={{ xs: 12, sm: 6 }} للـ responsive */}
+              {/* First & Last Name */}
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   required
@@ -137,6 +137,8 @@ export default function Register() {
                   onChange={handleChange}
                   autoFocus={!isMobile}
                   size={isMobile ? "small" : "medium"}
+                  error={!!validationErrors.first_name}
+                  helperText={validationErrors.first_name?.[0]}
                 />
               </Grid>
 
@@ -149,59 +151,73 @@ export default function Register() {
                   value={form.last_name}
                   onChange={handleChange}
                   size={isMobile ? "small" : "medium"}
+                  error={!!validationErrors.last_name}
+                  helperText={validationErrors.last_name?.[0]}
                 />
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }}>
+              {/* Address */}
+              <Grid size={12}>
                 <TextField
-                  required
                   fullWidth
-                  label="City / Country"
-                  name="country"
-                  value={form.country}
+                  label="Address (Optional)"
+                  name="address"
+                  value={form.address}
                   onChange={handleChange}
-                  placeholder="e.g., Aleppo"
+                  placeholder="e.g., Damascus, Syria"
                   size={isMobile ? "small" : "medium"}
+                  error={!!validationErrors.address}
+                  helperText={validationErrors.address?.[0]}
                 />
               </Grid>
 
+              {/* Mobile & Email */}
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
-                  required
                   fullWidth
-                  label="Mobile"
+                  label="Mobile Number (Optional)"
                   name="mobile"
                   value={form.mobile}
                   onChange={handleChange}
                   type="tel"
                   size={isMobile ? "small" : "medium"}
+                  error={!!validationErrors.mobile}
+                  helperText={validationErrors.mobile?.[0]}
                 />
               </Grid>
 
-              <Grid size={12}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   required
                   fullWidth
-                  label="Email"
+                  label="Email Address"
                   name="email"
                   type="email"
                   value={form.email}
                   onChange={handleChange}
                   size={isMobile ? "small" : "medium"}
+                  error={!!validationErrors.email}
+                  helperText={validationErrors.email?.[0]}
                 />
               </Grid>
+
+              {/* Age & Specialization */}
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   required
                   fullWidth
-                  label="age"
+                  label="Age"
                   name="age"
                   value={form.age}
                   onChange={handleChange}
                   type="number"
+                  InputProps={{ inputProps: { min: 18 } }}
                   size={isMobile ? "small" : "medium"}
+                  error={!!validationErrors.age}
+                  helperText={validationErrors.age?.[0]}
                 />
               </Grid>
+
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   required
@@ -211,25 +227,29 @@ export default function Register() {
                   value={form.specialization}
                   onChange={handleChange}
                   size={isMobile ? "small" : "medium"}
+                  error={!!validationErrors.specialization}
+                  helperText={validationErrors.specialization?.[0]}
                 />
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }}>
+              {/* Unit ID */}
+              <Grid size={12}>
                 <TextField
                   required
                   fullWidth
-                  label="unit id"
+                  label="Unit ID"
                   name="unit_id"
                   value={form.unit_id}
                   onChange={handleChange}
-               
-              
+                  type="number"
+                  placeholder="Enter a valid unit ID from the system"
                   size={isMobile ? "small" : "medium"}
-                >
-        
-                </TextField>
+                  error={!!validationErrors.unit_id}
+                  helperText={validationErrors.unit_id?.[0] || "Make sure this ID exists in the units table"}
+                />
               </Grid>
 
+              {/* Password */}
               <Grid size={12}>
                 <TextField
                   required
@@ -240,6 +260,8 @@ export default function Register() {
                   value={form.password}
                   onChange={handleChange}
                   size={isMobile ? "small" : "medium"}
+                  error={!!validationErrors.password}
+                  helperText={validationErrors.password?.[0] || "Must be at least 8 characters"}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -258,6 +280,7 @@ export default function Register() {
               fullWidth
               variant="contained"
               size="large"
+              disabled={isPending}
               sx={{
                 mt: { xs: 2.5, sm: 3 },
                 mb: 2,
@@ -274,7 +297,7 @@ export default function Register() {
                 transition: "all 0.3s ease",
               }}
             >
-              {isPending ? "Loading ... " : "Sign Up"}
+              {isPending ? "Signing Up..." : "Sign Up"}
             </Button>
 
             <Grid container justifyContent="center">
@@ -293,17 +316,16 @@ export default function Register() {
               </Grid>
             </Grid>
 
-
-            {isSuccess && data && (
+            {/* Success or General Error Messages */}
+            {isSuccess && (
               <Alert severity="success" sx={{ mt: 3 }}>
-                تم التسجيل بنجاح! جاري توجيهك...
-                {/* الـ setAuth هيخزن الـ token تلقائيًا من الـ onSuccess */}
+                Account created successfully! Redirecting...
               </Alert>
             )}
 
-            {isError && (
+            {isError && Object.keys(validationErrors).length === 0 && (
               <Alert severity="error" sx={{ mt: 3 }}>
-                {error?.message || "حدث خطأ أثناء التسجيل. حاول مرة أخرى."}
+                {error?.message || "An error occurred during registration. Please try again."}
               </Alert>
             )}
           </Box>

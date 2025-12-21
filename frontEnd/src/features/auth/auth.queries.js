@@ -10,8 +10,8 @@ export const useLogin = () => {
     return useMutation({
         mutationFn: loginApi,
         onSuccess: (data) => {
-            setAuth({ user: data.user, token: data.token });
-            navigate("/dashboard");
+            setAuth({ user: data.newEmployee, token: data.token });
+            navigate("/");
         },
     });
 };
@@ -22,7 +22,7 @@ export const useRegister = () => {
     return useMutation({
         mutationFn: registerApi,
         onSuccess: (data) => {
-            setAuth({ user: data.user, token: data.token });
+            setAuth({ user: data.newEmployee, token: data.token });
         },
     });
 };

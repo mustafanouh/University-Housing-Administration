@@ -151,6 +151,8 @@ export default function Drawer({ open, handleDrawerClose }) {
                 "&:hover": {
                   elevation: 24,
                   transform: "translateY(-4px)",
+                 
+
                   boxShadow: "0 8px 25px rgba(0,0,0,0.12)",
                 },
                 elevation: selectedCard === index ? 8 : 3,

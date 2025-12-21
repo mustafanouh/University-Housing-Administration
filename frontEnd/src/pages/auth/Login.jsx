@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
- import { useNavigateContext } from "../../context/navigateContext";
+import { useNavigateContext } from "../../context/navigateContext";
 import { useLogin } from "../../features/auth/auth.queries";
 // **Material-UI Components**
 import {
@@ -16,18 +16,24 @@ import {
   Link,
   Grid,
   useTheme,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import { Visibility, VisibilityOff, LockOutlined } from "@mui/icons-material";
+// إضافة أيقونة Google (من Material Icons)
+import GoogleIcon from "@mui/icons-material/Google";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false); // إذا أردت تتبع الحالة
+
   const {
-    mutate: loginMutation,  // هنا بنستخرج الدالة ونسميها زي ما نحب
-    isPending,                 // للـ loading
+    mutate: loginMutation,
+    isPending,
     isError,
     error,
-    data,                      // الـ response (فيه token و user)
+    data,
     isSuccess
   } = useLogin();
 
@@ -45,13 +51,15 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     loginMutation(form);
-
-
   };
 
   const handleRegisterClick = () => {
     navigate("/register");
+  };
 
+  const handleGoogleSignIn = () => {
+    // هنا يمكنك إضافة منطق تسجيل الدخول عبر Google لاحقًا
+    console.log("Sign in with Google clicked");
   };
 
   return (
@@ -133,27 +141,29 @@ export default function Login() {
               }}
             />
 
-            {/* رابط نسيت كلمة المرور + زر التسجيل في نفس الصف */}
+            {/* Remember me + Forgot password */}
             <Grid container spacing={2} alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
               <Grid >
-                <Button
-                  variant="text"
-                  onClick={handleRegisterClick}
-                  sx={{
-                    textTransform: "none",
-                    fontWeight: "medium",
-                  }}
-                >
-                 Your do not have account ,Sign Up now?
-                </Button>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      color="primary"
+                    />
+                  }
+                  label={
+                    <Typography variant="body2" sx={{ color: "primary.main" }}> {/* غيّر اللون هنا */}
+                      Remember me
+                    </Typography>
+                  }
+                />
               </Grid>
               <Grid >
                 <Link href="#" variant="body2" underline="hover">
                   Forgot password?
                 </Link>
               </Grid>
-
-
             </Grid>
 
             <Button
@@ -175,21 +185,53 @@ export default function Login() {
                 },
               }}
             >
-            {isPending ? "Loading ... " : "Sign in"}
+              {isPending ? "Loading..." : "Sign in"}
             </Button>
 
+            <Button
+              variant="text"
+              onClick={handleRegisterClick}
+              sx={{
+                textTransform: "none",
+                fontWeight: "medium",
+              }}
+            >
+              No account? Sign Up now
+            </Button>
 
+            {/* Sign in with Google Button */}
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<GoogleIcon />}
+              onClick={handleGoogleSignIn}
+              sx={{
+                mt: 2,
+                py: 1.5,
+                borderRadius: 3,
+                textTransform: "none",
+                fontWeight: "medium",
+                borderColor: "#dadce0",
+                color: "#3c4043",
+                bgcolor: "#ffffff",
+                "&:hover": {
+                  bgcolor: "#f8f9fa",
+                  borderColor: "#dadce0",
+                },
+              }}
+            >
+              Sign in with Google
+            </Button>
 
             {isSuccess && data && (
               <Alert severity="success" sx={{ mt: 3 }}>
-                تم التسجيل بنجاح! جاري توجيهك...
-                {/* الـ setAuth هيخزن الـ token تلقائيًا من الـ onSuccess */}
+                Login successful! Redirecting...
               </Alert>
             )}
 
             {isError && (
               <Alert severity="error" sx={{ mt: 3 }}>
-                {error?.message || "حدث خطأ أثناء التسجيل. حاول مرة أخرى."}
+                {error?.message || "An error occurred during login. Please try again."}
               </Alert>
             )}
           </Box>
