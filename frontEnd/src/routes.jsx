@@ -19,8 +19,9 @@ import UserProfile from "./component/Account";
 import Notifications from "./component/Notifications";
 import Contact from "./component/Contact";
 import Logout from "./pages/auth/Logout";
+import EmployeesManagement from "./component/admin/EmployeesManagement";
 
-  function ProtectedRoute({ children }) {
+function ProtectedRoute({ children }) {
   const cookies = Cookies.get();
   const token = cookies.token;
 
@@ -43,8 +44,23 @@ export default function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-
+      <Route
+        path="/EmployeesManagement"
+        element={
+          <ProtectedRoute>
+            <EmployeesManagement />
+          </ProtectedRoute>
+        }
+      />
       {/* الصفحات المحمية - يجب تسجيل الدخول للوصول إليها */}
+      <Route
+        path=""
+        element={
+          <ProtectedRoute>
+            <Navigate to="/DashboardLayout" replace />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="*"
         element={

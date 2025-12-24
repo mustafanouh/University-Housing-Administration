@@ -24,7 +24,7 @@ import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 
 import SupportAgent from '@mui/icons-material/SupportAgent';
-
+import GroupIcon from '@mui/icons-material/Group';
 
 
 import { useThemeContext } from '../theme/themeContext';
@@ -89,7 +89,8 @@ export default function Drawer({ open, handleDrawerClose }) {
   const menuItems = [
     // { text: "Dashboard", icon: <DashboardOutlinedIcon />, path: "/dashboard" },
     { index: 0, text: "Construction", icon: <ConstructionOutlinedIcon />, path: "/Construction" },
-    { index: 1, text: "AccommodationForm", icon: <AddCommentTwoToneIcon />, path: "/accommodation-form" },
+    { index: 1, text: "Employees Management", icon: <GroupIcon />, path: "/EmployeesManagement" },
+    { index: 6, text: "AccommodationForm", icon: <AddCommentTwoToneIcon />, path: "/accommodation-form" },
     { index: 2, text: "Payments", icon: <PaymentsOutlinedIcon />, path: "/payments" },
     { index: 3, text: "Contact", icon: <SupportAgent />, path: "/Contact" },
     { index: 4, text: "Settings", icon: <SettingsOutlinedIcon />, path: "/Settings" },

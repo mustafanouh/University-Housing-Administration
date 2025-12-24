@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { loginApi, registerApi } from "./auth.service";
+import { loginApi, registerApi } from "../../api/api";
 import { useAuthStore } from "./auth.store";
 import { useNavigateContext } from "../../context/navigateContext";
 
@@ -10,7 +10,8 @@ export const useLogin = () => {
     return useMutation({
         mutationFn: loginApi,
         onSuccess: (data) => {
-            setAuth({ user: data.newEmployee, token: data.token });
+            console.log(data)
+            setAuth({ user: data.employee, token: data.token });
             navigate("/");
         },
     });
@@ -18,11 +19,10 @@ export const useLogin = () => {
 
 export const useRegister = () => {
     const setAuth = useAuthStore((s) => s.setAuth);
-
     return useMutation({
         mutationFn: registerApi,
         onSuccess: (data) => {
-            setAuth({ user: data.newEmployee, token: data.token });
+            setAuth({ user: data.employee, token: data.token });
         },
     });
 };
