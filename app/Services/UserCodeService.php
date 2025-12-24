@@ -16,7 +16,6 @@ class UserCodeService
             for ($i = 0; $i < $length; $i++) {
                 $code.= $characters[rand(0, strlen($characters) - 1)];
             }
-            // Check if unique
         } while (Student::where('identification_code', $code)->exists());
 
         return $code;

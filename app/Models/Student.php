@@ -41,7 +41,7 @@ class Student extends Authenticatable
         parent::boot();
         static::creating( function ($student) {
             if(empty($student->identification_code)){
-                $student->identification_code = UserCodeService::generateUserCode(12);
+                $student->identification_code = UserCodeService::generateUserCode(8);
             }
         } );
     }
@@ -49,4 +49,22 @@ class Student extends Authenticatable
     public function room() {
         return $this->belongsToMany(Room::class , "assignment" , "student_id" , "room_id");
     }
+
+    public function housingRequest1() {
+        return $this->hasOne(HousingRequest::class , "student_1_id");
+    }
+    public function housingRequest2() {
+        return $this->hasOne(HousingRequest::class , "student_2_id");
+    }
+    public function housingRequest3() {
+        return $this->hasOne(HousingRequest::class , "student_3_id");
+    }
+    public function housingRequest4() {
+        return $this->hasOne(HousingRequest::class , "student_4_id");
+    }
+
+    public function fees() {
+        return $this->hasMany(Fee::class , "student_id" , "id");
+    }
+
 }

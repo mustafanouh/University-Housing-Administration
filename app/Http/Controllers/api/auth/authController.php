@@ -46,7 +46,8 @@ class authController extends Controller
 
         return response()->json([
             "token" => $token,
-            "employee" => $employee
+            "employee" => $employee,
+            "role" => $employee->roles
         ]);
     }
 

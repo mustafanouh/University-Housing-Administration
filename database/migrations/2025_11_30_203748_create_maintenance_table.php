@@ -14,6 +14,8 @@ return new class extends Migration
             $table->foreignId("treasury_id")->nullable()->constrained()->onUpdate("cascade")->onDelete("set null");
             $table->text("description")->nullable();
             $table->enum("status" , ["in queue" , "pending" , "finished" , "paused" , "interrupted" , "cancled"])->default("in queue");
+            $table->text("notes")->nullable()->default(null);
+            $table->double("total_cost")->nullable()->default(null)->check("total_cost >= 0");
             $table->timestamp("start_date")->nullable()->default(null);
             $table->timestamp("finish_date")->nullable()->default(null);
             $table->timestamps();

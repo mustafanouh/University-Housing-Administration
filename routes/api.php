@@ -27,6 +27,12 @@ use App\Http\Controllers\api\storageKeeper\StorageKeeperController;
 // Accountant Controller Classes ""
 use App\Http\Controllers\api\accountant\AccountantController;
 
+// Maintenance Service Controller Classes ::
+use App\Http\Controllers\api\maintenanceService\MaintenanceServiceController;
+
+// ITOffice Controller Classes ::
+
+
 
 
 
@@ -44,6 +50,8 @@ Route::prefix("std")->group(function () {
 });
 
 
+
+// Employee Auth Routes ::
 Route::group(["middleware" => "auth:employee"], function () {
 
     // Admin Routes ::
@@ -74,8 +82,8 @@ Route::group(["middleware" => "auth:employee"], function () {
         Route::get("/{unit}/storage", [UnitController::class, "getUnitStorage"]);
         Route::get("/{unit}/rooms", [UnitController::class, "getUnitRooms"]);
 
-        Route::post("/{room}" , [MentorController::class , "setRoomState"]);
         Route::get("/{room}/students" , [RoomController::class , "getRoomStudents"]);
+        Route::post("/{room}" , [MentorController::class , "setRoomState"]);
 
         Route::post("/maintenance" , [MentorController::class , "sendMaintenanceRequest"]);
         Route::post("/fees" , [MentorController::class , "sendFeeRequest"]);
@@ -85,8 +93,8 @@ Route::group(["middleware" => "auth:employee"], function () {
     // Storage Keeper Routes ::
     Route::group(["middleware" => "role:storageKeeper" , "prefix" => "storage"] , function () {
         Route::get("/items" , [StorageController::class , "getUnitStorageData"]);
-        Route::get("/new" , [StorageKeeperController::class , "setNewStorageItem"]);
-        Route::get("/update" , [StorageKeeperController::class , "setStorageItemValue"]);
+        Route::post("/new" , [StorageKeeperController::class , "setNewStorageItem"]);
+        Route::post("/update" , [StorageKeeperController::class , "setStorageItemValue"]);
     });
 
     // Accountant Routes ::
@@ -100,11 +108,23 @@ Route::group(["middleware" => "auth:employee"], function () {
         Route::post("/payments/{fee}" , [AccountantController::class , "approveFeePayment"]);
     });
 
+    // Maintenance Routes ::
+    Route::group(["middleware" => "role:maintenanceService" , "prefix" => "maintservice"] , function () {
+        Route::get("/all" , [MaintenanceServiceController::class , "getMaintenanceLog"]);
+        Route::get("/queue" , [MaintenanceServiceController::class , "getMaintenanceLogAll"]);
+        Route::post("/{maintenance}" , [MaintenanceServiceController::class , "setMaintenanceLogStatus"]);
+    });
+
+    // ITOffice Routes ::
+    Route::group([] , function (){
+
+    });
+
     Route::post("logout", [authController::class, "logout"]);
 });
 
 
-
+// Student Auth Routes ::
 Route::group(["prefix" => "std", "middleware" => "auth:student"], function () {
 
     Route::post("logout", [studentAuthController::class, "logout"]);
