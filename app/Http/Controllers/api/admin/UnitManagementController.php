@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Unit;
 
 
-use App\Http\Resources\open\UnitResource;
-use App\Http\Resources\open\UnitRoomResource;
-use App\Http\Resources\open\UnitStorageResource;
-
-
 
 class UnitManagementController extends Controller
 {
@@ -23,13 +18,15 @@ class UnitManagementController extends Controller
 
         if(! $validated){
             return response()->json([
-                "message" => "invalid room cap input"
+                "message" => "invalid room capacity input"
             ] , 422);
         }
 
-        $unit->update(["room_cap" => $validated["roomCap"]]);
+        $unit->room_cap = $validated["roomCap"];
+        $unit->save();
+
         return response()->json([
-            "message" => "room cap updated successfully"
+            "message" => "successfully updated room cap"
         ] , 200);
     }
 
@@ -41,9 +38,14 @@ class UnitManagementController extends Controller
         if(! $validated){
             return response()->json([
                 "message" => "invalid gender input"
-            ]);
+            ] , 422);
         }
 
-        $unit->update(["gender" => $validated["gender"]]);
+        $unit->gender = $validated["gender"];
+        $unit->save();
+
+        return response()->json([
+            "message" => "Successfully set unit gender"
+        ] , 200);
     }
 }

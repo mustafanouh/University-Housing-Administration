@@ -27,7 +27,7 @@ class EmployeeManagementController extends Controller
 
     public function assignRole(Employee $employee, ValidRoleRequest $request)
     {
-        $employee->assignRole();
+        $employee->assignRole($request->validated("roleId"));
         return response()->json([
             "message" => "role assigned successfully"
         ], 200);

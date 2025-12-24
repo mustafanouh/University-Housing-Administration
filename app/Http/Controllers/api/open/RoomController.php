@@ -12,6 +12,6 @@ use App\Http\Resources\open\StudentResource;
 class RoomController extends Controller
 {
     public function getRoomStudents(Room $room) {
-        return StudentResource::collection($room->student());
+        return StudentResource::collection($room->student);
     }
 }

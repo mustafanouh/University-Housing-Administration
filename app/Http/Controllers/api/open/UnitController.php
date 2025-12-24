@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Unit;
 
 use App\Http\Resources\open\UnitResource;
-use App\Http\Resources\open\UnitRoomResource;
-use App\Http\Resources\open\UnitStorageResource;
+use App\Http\Resources\open\RoomResource;
+use App\Http\Resources\open\StorageResource;
 
 class UnitController extends Controller
 {
@@ -18,11 +18,11 @@ class UnitController extends Controller
     }
 
     public function getUnitStorage(Unit $unit) {
-        return UnitStorageResource::collection($unit->with("storage"));
+        return StorageResource::collection($unit->storage);
     }
 
     public function getUnitRooms(Unit $unit) {
-        return UnitRoomResource::collection($unit->with("room"));
+        return RoomResource::collection($unit->room);
     }
 
 }

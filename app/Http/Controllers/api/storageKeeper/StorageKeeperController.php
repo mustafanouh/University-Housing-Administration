@@ -33,7 +33,7 @@ class StorageKeeperController extends Controller
         ]);
 
         return response()->json([
-            "message" => "item inserted successfully",
+            "message" => "successfully inserted new item",
             "itemInfo" => StorageResource::make($item)
         ] , 200);
     }
@@ -50,10 +50,9 @@ class StorageKeeperController extends Controller
             ] , 422);
         }
 
-        $item = $request->user("employee")->load("unit.storage")->find($validated["itemId"]);
-        $item->update([
-            "quantity" => $validated["quantity"]
-        ]);
+        $item = $request->user("employee")->load("unit.storage")->unit->flatMap->storage->where("id" , $validated["itemId"])->first();
+        $item->quantity = $validated["value"];
+        $item->save();
 
         return response()->json([
             "message" => "successfuly set item value"

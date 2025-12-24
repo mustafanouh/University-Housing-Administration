@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Resources\open;
+namespace App\Http\Resources\student;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+
+use App\Http\Resources\open\UnitResource;
+
+use App\Http\Resources\open\RoomResource;
 
 class StudentResource extends JsonResource
 {
@@ -15,6 +19,7 @@ class StudentResource extends JsonResource
     public function toArray(Request $request): array
     {
         // return parent::toArray($request);
+
         return [
             "firstName" => $this->first_name,
             "lastName" => $this->last_name,

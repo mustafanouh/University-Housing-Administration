@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Services\VerifyRelationService;
 use App\Services\VerifyHousingRequestService;
 
+use App\Http\Resources\open\HousingRequestResource;
+
 
 class StudentController extends Controller
 {
@@ -20,13 +22,13 @@ class StudentController extends Controller
     {
         $exists = $request->user("student")->housingRequest1;
         if (! $exists) {
-            return response()->json(["message" => "clear to send housing request"], 404);
+            return response()->json(["message" => "clear to send housing request"], 200);
         }
 
         return response()->json([
             "messsage" => "student already has housing request in queue",
-            "housingRequest" => $exists
-        ], 200);
+            "housingRequest" => HousingRequestResource::make($exists)
+        ], 422);
     }
 
     public function getFeeLog(Request $request) {
@@ -34,7 +36,7 @@ class StudentController extends Controller
     }
 
     public function getRoommateRelation(Request $request) {
-        return VerifyRelationService::getRoommateRequest($request->user("student"));
+        return HousingRequestResource::make(VerifyRelationService::getRoommateRequest($request->user("student")));
     }
 
     public function cancleRoommateRelation(HousingRequest $housingRequest , Request $request) {
@@ -49,12 +51,22 @@ class StudentController extends Controller
             $housingRequest->student_3_id = null;
             $housingRequest->save();
         }
+
+        return response()->json([
+            "message" => "successfully cancled roommate relation"
+        ] ,200);
     }
 
     public function sendHousingRequest(HousingRequestRequest $hRequest , Request $request) {
         $exists = $request->user("student")->housingRequest1;
-        if (! $exists) {
-            return response()->json(["message" => "clear to send housing request"], 404);
+        if ($exists) {
+            return response()->json(["message" => "student already have housing request in queue"], 422);
+        }
+
+        if(in_array($request->validated("student1") , [$request->validated("student2") , $request->validated("student3") , $request->validated("student4")])){
+            return response()->json([
+                "message" => "student is referenced as a roommate in the same request"
+            ] , 422);
         }
 
         $validated = $hRequest->validated();

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\admin;
+namespace App\Http\Resources\open;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoleResource extends JsonResource
+class RoomResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,10 @@ class RoleResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            "roleId" => $this->id,
-            "roleName" => $this->name,
-            "roleCreatedAt" => $this->created_at
+            "unitId" => $this->unit_id,
+            "number" => $this->number,
+            "state" => $this->state,
+            "createdAt" => $this->createdAt
         ];
     }
 }

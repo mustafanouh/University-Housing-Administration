@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     protected $fillable = [
-
+        "unit_id",
+        "number",
+        "state"
     ];
 
     protected $hidden = [
@@ -22,5 +24,5 @@ class Room extends Model
         return $this->belongsToMany(Student::class , "assignment" , "room_id" , "student_id");
     }
 
-    
+
 }

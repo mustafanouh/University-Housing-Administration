@@ -13,7 +13,7 @@ use App\Http\Requests\auth\student\studentRegisterRequest;
 use App\Http\Requests\auth\student\studentLoginRequest;
 use App\Http\Requests\studentLogoutRequest;
 
-use App\Http\Resources\student\RegisteredStudentResource;
+use App\Http\Resources\student\StudentResource;
 
 
 class studentAuthController extends Controller
@@ -24,8 +24,8 @@ class studentAuthController extends Controller
         $token = $newStudent->createToken("SAPI")->plainTextToken;
 
         return response()->json([
-            "newStudent" => RegisteredStudentResource::make($newStudent),
-            "token" => $token
+            "token" => $token,
+            "newStudent" => StudentResource::make($newStudent)
         ]);
     }
 
@@ -44,7 +44,7 @@ class studentAuthController extends Controller
 
         return response()->json([
             "token" => $token,
-            "student" => $student
+            "student" => StudentResource::make($student)
         ]);
     }
 

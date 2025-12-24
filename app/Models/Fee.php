@@ -8,7 +8,11 @@ use App\Services\PaymentCodeService;
 
 class Fee extends Model
 {
-    protected $fillable = [];
+    protected $fillable = [
+        "student_id",
+        "type",
+        "cost"
+    ];
 
     protected  $hidden = [];
 
@@ -23,5 +27,9 @@ class Fee extends Model
 
     public function student() {
         return $this->belongsTo(Student::class , "student_id" , "id");
+    }
+
+    public function treasury() {
+        return $this->belongsTo(Treasury::class , "treasury_id" , "id");
     }
 }

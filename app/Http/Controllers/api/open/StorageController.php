@@ -14,7 +14,7 @@ use App\Http\Resources\open\StorageResource;
 class StorageController extends Controller
 {
     public function getUnitStorageData(Request $request) {
-        $storage = $request->user("employee")->load("unit.storage");
+        $storage = $request->user("employee")->load("unit.storage")->unit->flatMap->storage;
         return StorageResource::collection($storage);
     }
 

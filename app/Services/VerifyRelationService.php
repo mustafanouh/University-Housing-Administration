@@ -27,8 +27,8 @@ class VerifyRelationService
     public static function getRoommateRequest(Student $student) {
         $log = [];
         return
-            ($student->housingRequest1 ? $student->housingRequest1 : null) ||
             ($student->housingRequest2 ? $student->housingRequest2 : null) ||
-            ($student->housingRequest3 ? $student->housingRequest3 : null) ;
+            ($student->housingRequest3 ? $student->housingRequest3 : null) ||
+            ($student->housingRequest4 ? $student->housingRequest4 : null) ;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\mentor;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class FeeRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class FeeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,9 @@ class FeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "studentId" => ["nullable" , Rule::exists("students" , "id")],
+            "type" => ["required" , Rule::in(["registeration" , "punishment"])],
+            "cost" => ["required" , "numeric" , "min:1"],
         ];
     }
 }

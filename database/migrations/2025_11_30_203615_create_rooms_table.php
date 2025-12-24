@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId("unit_id")->constrained();
-            $table->integer("number");
-            $table->enum("state" , ["full" , "empty" , "under maintenance"]);
+            $table->integer("number")->nullable()->default(null)->unique();
+            $table->enum("state" , ["full" , "empty" , "under maintenance"])->default("empty");
             $table->timestamps();
         });
     }

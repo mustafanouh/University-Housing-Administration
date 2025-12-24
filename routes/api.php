@@ -18,6 +18,10 @@ use App\Http\Controllers\api\admin\UnitManagementController;
 use App\Http\Controllers\api\admin\MiscController;
 use App\Http\Controllers\api\admin\SettingsController;
 
+// Student Controller Classes ::
+use App\Http\Controllers\api\student\StudentController;
+
+
 // Mentor Controller Classes ::
 use App\Http\Controllers\api\mentor\MentorController;
 
@@ -120,12 +124,19 @@ Route::group(["middleware" => "auth:employee"], function () {
 
     });
 
+
     Route::post("logout", [authController::class, "logout"]);
 });
 
 
 // Student Auth Routes ::
 Route::group(["prefix" => "std", "middleware" => "auth:student"], function () {
+
+    Route::get("/check" , [StudentController::class , "housing"]);
+    Route::get("/roommate" , [StudentController::class , "getRoommateRelation"]);
+    Route::post("/roommate/cancel/{housingRequest}" , [StudentController::class , "cancleRoommateRelation"]);
+    Route::get("/fees" , [StudentController::class , "getFeeLog"]);
+    Route::post("/request" , [StudentController::class , "sendHousingRequest"]);
 
     Route::post("logout", [studentAuthController::class, "logout"]);
 });

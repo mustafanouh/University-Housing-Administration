@@ -11,14 +11,16 @@ use App\Models\MaintenanceRequest;
 use App\Models\Maintenance;
 
 use App\Http\Resources\accountant\MaintenanceRequestResource;
+use App\Http\Resources\open\EmployeeResource;
 use App\Http\Resources\open\TreasuryResource;
 use App\Http\Resources\open\FeeResource;
 
 
 class AccountantController extends Controller
 {
-    public function getFunds() {
+    public function getFunds(Request $request) {
         return response()->json([
+            "accountant" => EmployeeResource::make($request->user("employee")),
             "totalFund" => Treasury::where("income" , true)->sum("amount"),
             "log" => TreasuryResource::collection(Treasury::paginate(15))
         ]);
@@ -57,11 +59,14 @@ class AccountantController extends Controller
 
         $treasuryLog = Treasury::query()->create([
             "employee_id" => $request->user("employee")->id,
+            "income" => false,
             "amount" => $mRequest->cost,
-            "description" => $validated["description"] ? $validated["description"] : $mRequest->description
+            "description" => $validated["description"] ?? $mRequest->description
         ]);
 
-        $mRequest->update(["funded" => true]);
+        $mRequest->funded = true;
+        $mRequest->save();
+
         Maintenance::query()->create([
             "maintenance_request_id" => $mRequest->id,
             "treasury_id" => $treasuryLog->id,

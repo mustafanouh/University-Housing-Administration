@@ -3,6 +3,7 @@
 namespace App\Http\Requests\mentor;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class MaintenanceRequestRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class MaintenanceRequestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            "roomId" => ["required" , Rule::exists("rooms" , "id")->where( "unit_id" , $this->user("employee")->unit_id)],
+            "cost" => ["required" , "numeric" , "min:1"],
+            "description" => ["nullable" , "string" , "max:512"]
         ];
     }
 }

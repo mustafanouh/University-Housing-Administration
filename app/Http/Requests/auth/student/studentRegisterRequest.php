@@ -30,7 +30,6 @@ class StudentRegisterRequest extends FormRequest
             "password" => ["required", "min:8", "max:32"],
             "specialization" => ["required" , "string"],
             "year_of_study" => ["required" , "numeric"],
-
         ];
     }
 }

@@ -14,6 +14,11 @@ class StudentTinyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            "fullName" => $this->first_name . ' ' . $this->last_name,
+            "specialization" => $this->specialization,
+            "identification" => $this->identification_code
+        ];
     }
 }

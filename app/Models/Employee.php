@@ -48,6 +48,10 @@ class Employee extends Authenticatable
         return $this->belongsTo(Unit::class , "unit_id" , "id");
     }
 
+    public function treasury() {
+        return $this->hasMany(Treasury::class, "employee_id" , "id");
+    }
+
     public function role() {
         return $this->belongsTo(Role::class);
     }

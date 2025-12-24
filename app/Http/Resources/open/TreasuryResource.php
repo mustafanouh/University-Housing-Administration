@@ -14,6 +14,12 @@ class TreasuryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            "transaction" => $this->income == true ? "income" : "spendings",
+            "amount" => $this->amount,
+            "description" => $this->description,
+            "createdAt" => $this->created_at
+        ];
     }
 }

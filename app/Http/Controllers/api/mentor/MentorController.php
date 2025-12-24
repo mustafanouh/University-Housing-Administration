@@ -26,20 +26,25 @@ class MentorController extends Controller
             ] , 422);
         }
 
-        $room->update([
-            "state" => $validated["state"]
-        ]);
+        $room->state = $validated["state"];
+        $room->save();
 
         return response()->json([
             "message" => "room state updated successfully"
         ] , 200);
     }
 
-    public function sendMaintenanceRequest(MaintenanceRequestRequest $request) {
-        MaintenanceRequest::query()->create($request->validated());
+    public function sendMaintenanceRequest(MaintenanceRequestRequest $mRequest , Request $request) {
+        MaintenanceRequest::query()->create([
+            "unit_id" => $request->user("employee")->load("unit")->unit->flatmap->id,
+            "room_id" => $mRequest->validated("roomId"),
+            "unit_manager_id" => $request->user("employee")->id,
+            "cost" => $mRequest->validated("cost"),
+            "description" => $mRequest->validated("description")
+        ]);
 
         return response()->json([
-            "message" => "maintenance request sent succesfully"
+            "message" => "successfully sent maintenance request"
         ] , 200);
     }
 

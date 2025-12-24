@@ -11,11 +11,8 @@ use App\Models\Employee;
 
 use App\Http\Requests\auth\registerRequest;
 use App\Http\Requests\auth\loginRequest;
-use App\Http\Requests\auth\logoutRequest;
-use App\Http\Requests\auth\ProfileRequest;
 
-use App\Http\Resources\employee\RegisteredEmployeeResource;
-use App\Http\Resources\employee\EmployeeProfileResource;
+use App\Http\Resources\open\EmployeeResource;
 
 
 class authController extends Controller
@@ -26,7 +23,7 @@ class authController extends Controller
         $token = $newEmployee->createToken("API")->plainTextToken;
 
         return response()->json([
-            "employee" => RegisteredEmployeeResource::make($newEmployee),
+            "employee" => EmployeeResource::make($newEmployee),
             "token" => $token
         ]);
     }
@@ -46,8 +43,7 @@ class authController extends Controller
 
         return response()->json([
             "token" => $token,
-            "employee" => $employee,
-            "role" => $employee->roles
+            "employee" => EmployeeResource::make($employee),
         ]);
     }
 
@@ -58,11 +54,7 @@ class authController extends Controller
 
         return response()->json([
             "message" => "logout successful",
-            "employee" => $employee
         ]);
     }
 
-    public function profile(ProfileRequest $request){
-
-    }
 }

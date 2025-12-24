@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class HousingRequest extends Model
 {
-    protected $fillable = [];
+    protected $fillable = [
+        "brothers",
+        "student_1_id",
+        "student_2_id",
+        "student_3_id",
+        "student_4_id"
+    ];
 
     protected $hidden = [];
 

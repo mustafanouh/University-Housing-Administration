@@ -20,7 +20,8 @@ class MaintenanceRequestResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            "unitId" => $this->unit_name,
+            "unitId" => $this->unit_id,
+            "unitName" => $this->unit_name,
             "roomId" => $this->room_id,
             "unitManager" => $this->when($this->unit_manager_id, function () {
                 return EmployeeResource::make(Employee::find($this->unit_manager_id));

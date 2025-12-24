@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class MaintenanceRequest extends Model
 {
     protected $fillable = [
-        
+        "room_id",
+        "cost",
+        "description"
     ];
 
     protected $hidden = [
@@ -19,6 +21,10 @@ class MaintenanceRequest extends Model
     }
     public function getRoomNumberAttribute () {
         return Room::where("id" , $this->room_id)->value("room_number") ?? null;
+    }
+
+    public function maintenance() {
+        return $this->hasOne(Maintenance::class , "maintenance_request_id" , "id");
     }
 
 }
