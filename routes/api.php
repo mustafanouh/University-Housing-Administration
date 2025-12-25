@@ -83,11 +83,11 @@ Route::group(["middleware" => "auth:employee"], function () {
     // Mentor Routes ::
     Route::group(["middleware" => "role:mentor", "prefix" => "mentor"], function () {
         Route::get("/units", [UnitController::class, "getUnitData"]);
-        Route::get("/{unit}/storage", [UnitController::class, "getUnitStorage"]);
-        Route::get("/{unit}/rooms", [UnitController::class, "getUnitRooms"]);
+        Route::get("/units/{unit}/storage", [UnitController::class, "getUnitStorage"]);
+        Route::get("/units/{unit}/rooms", [UnitController::class, "getUnitRooms"]);
 
-        Route::get("/{room}/students" , [RoomController::class , "getRoomStudents"]);
-        Route::post("/{room}" , [MentorController::class , "setRoomState"]);
+        Route::post("/rooms/{room}" , [MentorController::class , "setRoomState"]);
+        Route::get("/rooms/{room}/students" , [RoomController::class , "getRoomStudents"]);
 
         Route::post("/maintenance" , [MentorController::class , "sendMaintenanceRequest"]);
         Route::post("/fees" , [MentorController::class , "sendFeeRequest"]);
@@ -103,10 +103,10 @@ Route::group(["middleware" => "auth:employee"], function () {
 
     // Accountant Routes ::
     Route::group(["middleware" => "role:accountant" , "prefix" => "accountant"] , function () {
-        Route::get("/fundlog" , action: [AccountantController::class , "getFunds"]);
+        Route::get("/fundlog" , [AccountantController::class , "getFunds"]);
         Route::get("/paidfees" , [AccountantController::class , "getPaidFees"]);
         Route::get("/pendingfees" , [AccountantController::class , "getPendingFees"]);
-        Route::get("/maintenanc" , [AccountantController::class , "getAgreedMaintenanceRequest"]);
+        Route::get("/maintenance" , [AccountantController::class , "getAgreedMaintenanceRequest"]);
 
         Route::post("/maintenance/{mRequest}" , [AccountantController::class , "fundMaintenanceRequest"]);
         Route::post("/payments/{fee}" , [AccountantController::class , "approveFeePayment"]);
@@ -114,8 +114,8 @@ Route::group(["middleware" => "auth:employee"], function () {
 
     // Maintenance Routes ::
     Route::group(["middleware" => "role:maintenanceService" , "prefix" => "maintservice"] , function () {
-        Route::get("/all" , [MaintenanceServiceController::class , "getMaintenanceLog"]);
-        Route::get("/queue" , [MaintenanceServiceController::class , "getMaintenanceLogAll"]);
+        Route::get("/all" , [MaintenanceServiceController::class , "getMaintenanceLogAll"]);
+        Route::get("/queue" , [MaintenanceServiceController::class , "getMaintenanceLog"]);
         Route::post("/{maintenance}" , [MaintenanceServiceController::class , "setMaintenanceLogStatus"]);
     });
 

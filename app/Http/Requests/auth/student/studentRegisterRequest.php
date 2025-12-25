@@ -22,14 +22,14 @@ class StudentRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "first_name" => ["required", "string", "min:3", "max:32"],
-            "last_name" => ["required", "string", "min:3", "max:32"],
+            "firstName" => ["required", "string", "min:3", "max:32"],
+            "lastName" => ["required", "string", "min:3", "max:32"],
             "country" => ["required" , "string"],
             "mobile" => ["present", "nullable", "string"],
             "email" => ["required", "email"],
             "password" => ["required", "min:8", "max:32"],
             "specialization" => ["required" , "string"],
-            "year_of_study" => ["required" , "numeric"],
+            "yearOfStudy" => ["required" , "numeric"],
         ];
     }
 }

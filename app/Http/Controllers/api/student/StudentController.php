@@ -22,13 +22,13 @@ class StudentController extends Controller
     {
         $exists = $request->user("student")->housingRequest1()->housingRequest1;
         if (! $exists) {
-            return response()->json(["message" => "clear to send housing request"], 200);
+            return response()->json(["message" => "clear to send housing request"], 404);
         }
 
         return response()->json([
             "messsage" => "student already has housing request in queue",
             "housingRequest" => HousingRequestResource::make($exists)
-        ], 422);
+        ], 200);
     }
 
     public function getFeeLog(Request $request) {
@@ -44,12 +44,16 @@ class StudentController extends Controller
         if($housingRequest->student_2_id == $student){
             $housingRequest->student_2_id = null;
             $housingRequest->save();
-        } else if($housingRequest->student_2_id == $student){
+        } else if($housingRequest->student_3_id == $student){
             $housingRequest->student_2_id = null;
             $housingRequest->save();
-        } else {
+        } else if($housingRequest->student_4_id == $student){
             $housingRequest->student_3_id = null;
             $housingRequest->save();
+        } else{
+            return response()->json([
+                "message" => "student is not a roommate with anyone, no reference found"
+            ] , 404);
         }
 
         return response()->json([
