@@ -25,11 +25,13 @@ import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 
 import SupportAgent from '@mui/icons-material/SupportAgent';
 import GroupIcon from '@mui/icons-material/Group';
-
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 import { useThemeContext } from '../theme/themeContext';
 import { useNavigateContext } from '../context/navigateContext';
 import { useState } from 'react';
+import MaintenanceRequestsTable from './admin/MaintenanceRequestsTable';
 
 
 
@@ -87,7 +89,7 @@ export default function Drawer({ open, handleDrawerClose }) {
 
 
   const menuItems = [
-    // { text: "Dashboard", icon: <DashboardOutlinedIcon />, path: "/dashboard" },
+    { index: 7, text: "MaintenanceRequestsTable", icon: <AssignmentIcon />, path: "/MaintenanceRequestsTable" },
     { index: 0, text: "Construction", icon: <ConstructionOutlinedIcon />, path: "/Construction" },
     { index: 1, text: "Employees Management", icon: <GroupIcon />, path: "/EmployeesManagement" },
     { index: 6, text: "AccommodationForm", icon: <AddCommentTwoToneIcon />, path: "/accommodation-form" },
@@ -95,6 +97,7 @@ export default function Drawer({ open, handleDrawerClose }) {
     { index: 3, text: "Contact", icon: <SupportAgent />, path: "/Contact" },
     { index: 4, text: "Settings", icon: <SettingsOutlinedIcon />, path: "/Settings" },
     { index: 5, text: "Logout", icon: <LogoutOutlinedIcon />, path: "/logout" },
+    { index: 8, text: "Units", icon: <ApartmentIcon />, path: "/Units" },
 
   ];
 

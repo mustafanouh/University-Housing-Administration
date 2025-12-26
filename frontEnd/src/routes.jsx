@@ -20,7 +20,10 @@ import Notifications from "./component/Notifications";
 import Contact from "./component/Contact";
 import Logout from "./pages/auth/Logout";
 import EmployeesManagement from "./component/admin/EmployeesManagement";
-
+import MaintenanceRequestsTable from "./component/admin/MaintenanceRequestsTable";
+import MaintenanceProgress from "./component/admin/MaintenanceProgress";
+import Units from "./component/admin/Units";
+import UnitRooms from "./component/admin/UnitRooms";
 function ProtectedRoute({ children }) {
   const cookies = Cookies.get();
   const token = cookies.token;
@@ -49,6 +52,38 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <EmployeesManagement />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/MaintenanceRequestsTable"
+        element={
+          <ProtectedRoute>
+            <MaintenanceRequestsTable />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/MaintenanceRequestsTable/MaintenanceProgress"
+        element={
+          <ProtectedRoute>
+            <MaintenanceProgress />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/Units"
+        element={
+          <ProtectedRoute>
+            <Units />
+          </ProtectedRoute>
+        }
+      />
+         <Route
+        path="/Units/rooms/:unitId"
+        element={
+          <ProtectedRoute>
+         <UnitRooms />
           </ProtectedRoute>
         }
       />
