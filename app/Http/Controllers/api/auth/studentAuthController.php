@@ -9,16 +9,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\Student;
 
-use App\Http\Requests\auth\student\studentRegisterRequest;
-use App\Http\Requests\auth\student\studentLoginRequest;
-use App\Http\Requests\studentLogoutRequest;
+use App\Http\Requests\auth\student\StudentRegisterRequest;
+use App\Http\Requests\auth\student\StudentLoginRequest;
 
 use App\Http\Resources\student\StudentResource;
 
 
 class studentAuthController extends Controller
 {
-    public function register(studentRegisterRequest $request){
+    public function register(StudentRegisterRequest $request){
 
         $newStudent = Student::query()->create($request->validated());
         $token = $newStudent->createToken("SAPI")->plainTextToken;
@@ -29,14 +28,19 @@ class studentAuthController extends Controller
         ]);
     }
 
-    public function login(studentLoginRequest $request){
+    public function login(StudentLoginRequest $request){
 
         $credentials = $request->only("email" , "password");
 
         $student = Auth::guard("student")->getProvider()->retrieveByCredentials(["email" => $credentials["email"]]);
-        if(! $student || ! Hash::check($credentials["password"] , $student->password)){
+        if(! $student){
             return response()->json([
-                "message" => "invalid credentials"
+                "message" => "email not found"
+            ] , 404);
+        }
+        if(! Hash::check($credentials["password"] , $student->password)){
+            return response()->json([
+                "message" => "invalid password"
             ] , 422);
         }
 

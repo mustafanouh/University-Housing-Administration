@@ -16,6 +16,8 @@ class Employee extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    protected $guard_name = "employee";
+
     protected $fillable = [
         "first_name",
         "last_name",
@@ -32,11 +34,6 @@ class Employee extends Authenticatable
         "password",
         "address"
     ];
-
-    protected function casts(): array
-    {
-        return [];
-    }
 
     public function setPasswordAttribute ($value){
         if (! empty($value)){

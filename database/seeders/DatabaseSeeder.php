@@ -60,9 +60,12 @@ class DatabaseSeeder extends Seeder
             echo"\033[32munit\033[0m {$unit->name} done\n\n";
         }
 
-        echo "\033[33mcreating\033[0m \033[36m100\033[0m student records\n";
-        Student::factory(100)->create();
-        echo "\033[32msuccessfully\033[0m created \033[36m100\033[0m student records\n";
+        echo "\033[33mcreating\033[0m \033[36m50\033[0m student records\n";
+        Student::factory(50)->create();
+        echo "\033[32msuccessfully\033[0m created \033[36m50\033[0m student records\n";
+
+        Employee::query()->update(["password" => bcrypt("password")]);
+        Student::query()->update(["password" => bcrypt("password")]);
 
     }
 }

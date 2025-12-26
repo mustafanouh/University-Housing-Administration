@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
  */
 class EmployeeFactory extends Factory
 {
+    protected static $password = null;
+
     /**
      * Define the model's default state.
      *
@@ -24,10 +26,10 @@ class EmployeeFactory extends Factory
             "address" => fake()->address(),
             "mobile" => "09" . fake()->unique()->randomNumber(8),
             "email" => fake()->unique()->email(),
-            "password" => Hash::make("password"),
+            "password" => bcrypt('password'),
             "specialization" => fake()->jobTitle(),
             "leave_date" => null,
-            // "unit_id" =>
         ];
     }
 }
+

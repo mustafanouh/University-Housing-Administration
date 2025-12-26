@@ -16,6 +16,8 @@ class Student extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    protected $guard_name = "student";
+
     protected $fillable = [
         "first_name",
         "last_name",
@@ -41,7 +43,7 @@ class Student extends Authenticatable
         parent::boot();
         static::creating( function ($student) {
             if(empty($student->identification_code)){
-                $student->identification_code = UserCodeService::generateUserCode(8);
+                $student->identification_code = UserCodeService::generateUserCode(12);
             }
             if(empty($student->data_complete)){
                 $student->data_complete = false;

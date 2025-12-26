@@ -13,7 +13,7 @@ use App\Models\Maintenance;
 use App\Http\Resources\admin\MaintenanceRequestResource;
 
 // use App\Http\Resources\admin\MaintenanceProgressResource;
-use App\Http\Resources\open\MaintenanceResource as MaintenanceProgressResource;
+use App\Http\Resources\open\MaintenanceResource;
 
 class MaintenanceManagementController extends Controller
 {
@@ -22,7 +22,7 @@ class MaintenanceManagementController extends Controller
     }
 
     public function getMaintenanceProgress() {
-        return MaintenanceProgressResource::collection(Maintenance::all());
+        return MaintenanceResource::collection(Maintenance::all());
     }
 
     public function agreeMaintenanceRequest(MaintenanceRequest $mRequest , Request $request) {

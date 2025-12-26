@@ -30,7 +30,7 @@ class registerRequest extends FormRequest
             "mobile" => ["present", "nullable", "string"],
             "email" => ["required", "email"],
             "password" => ["required", "min:8", "max:32"],
-            "specialization" => ["required", "string"],
+            "specialization" => ["present" , "nullable", "string"],
             "unit_id" => ["present" , "nullable" , "numeric", Rule::exists("units", "id")]
         ];
     }

@@ -34,9 +34,14 @@ class authController extends Controller
         $credentials = $request->only("email" , "password");
 
         $employee = Auth::guard("employee")->getProvider()->retrieveByCredentials(["email" => $credentials["email"]]);
-        if(! $employee || ! Hash::check($credentials["password"] , $employee->password)){
+        if(! $employee){
             return response()->json([
-                "message" => "invalid credentials"
+                "message" => "email not found"
+            ] , 404);
+        }
+        if(! Hash::check($credentials["password"] , $employee->password)){
+            return response()->json([
+                "message" => "invalid password"
             ] , 422);
         }
 
