@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('storage', function (Blueprint $table) {
             $table->id();
             $table->foreignId("unit_id")->constrained();
-            $table->string("itme_name");
+            $table->string("item_name");
             $table->integer("quantity")->check("quantity >= 0");
             $table->timestamps();
         });

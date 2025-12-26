@@ -43,6 +43,15 @@ class Student extends Authenticatable
             if(empty($student->identification_code)){
                 $student->identification_code = UserCodeService::generateUserCode(8);
             }
+            if(empty($student->data_complete)){
+                $student->data_complete = false;
+            }
+            if(empty($student->eligible)){
+                $student->eligible = false;
+            }
+            if(empty($student->house_in)){
+                $student->house_id = false;
+            }
         } );
     }
 

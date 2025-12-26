@@ -120,7 +120,7 @@ Route::group(["middleware" => "auth:employee"], function () {
     });
 
     // ITOffice Routes ::
-    Route::group([] , function (){
+    Route::group(["middleware" => "role:itOffice" , "prefix" => "itoffice"] , function (){
 
     });
 

@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string("first_name");
             $table->string("last_name");
+            $table->integer("age")->check("age > 0");
             $table->string("country");
             $table->string("mobile")->unique()->nullable()->default(null);
             $table->string("email")->unique();

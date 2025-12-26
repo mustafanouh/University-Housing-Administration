@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("password");
             $table->string("specialization");
             $table->timestamp("leave_date")->nullable()->default(null);
-            $table->foreignId("unit_id")->nullable()->constrained()->onUpdate("cascade")->onDelete("set null");
+            $table->foreignId("unit_id")->nullable()->default(null)->constrained()->onUpdate("cascade")->onDelete("set null");
             $table->timestamps();
         });
     }
