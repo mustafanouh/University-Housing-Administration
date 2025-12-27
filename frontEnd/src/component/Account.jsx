@@ -15,7 +15,7 @@ import { useAuthStore } from "../features/auth/auth.store";
 
 export default function UserProfile() {
   const { colors } = useThemeContext();
-  const { token, user } = useAuthStore(); // user contains newEmployee data
+  const { token, user, role } = useAuthStore(); // user contains newEmployee data
 
   // Combine full name
   const fullName = `${user?.first_name || ""} ${user?.last_name || ""}`.trim();
@@ -63,7 +63,7 @@ export default function UserProfile() {
             {fullName || "Not Specified"}
           </Typography>
           <Chip
-            label="Employee"
+            label={`Role: ${role || "Not Specified"}`}
             color="secondary"
             sx={{ mt: 1.5, height: 36, fontSize: "1rem", fontWeight: "bold" }}
           />

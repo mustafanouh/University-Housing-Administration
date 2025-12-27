@@ -11,7 +11,7 @@ export const useLogin = () => {
         mutationFn: loginApi,
         onSuccess: (data) => {
             console.log(data)
-            setAuth({ user: data.employee, token: data.token});
+            setAuth({ user: data.employee, token: data.token, role: data.employee.roles});
             navigate("/");
         },
     });

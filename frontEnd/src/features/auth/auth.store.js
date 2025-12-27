@@ -11,7 +11,9 @@ export const useAuthStore = create(
 
       token: Cookies.get("token") || null,
 
-      setAuth: ({ user, token }) => {
+      role: null,
+
+      setAuth: ({ user, token, role }) => {
         if (token) {
           Cookies.set("token", token, {
             expires: 7,          // صالح لمدة 7 أيام
@@ -19,12 +21,12 @@ export const useAuthStore = create(
             sameSite: "strict",  // حماية من CSRF
           });
         }
-        set({ user, token });
+        set({ user, token, role });
       },
 
       logout: () => {
         Cookies.remove("token");
-        set({ user: null, token: null });
+        set({ user: null, token: null, role: null });
       },
 
     }),
