@@ -21,6 +21,7 @@ export const useAuthStore = create(
             sameSite: "strict",  // حماية من CSRF
           });
         }
+        
         set({ user, token, role });
       },
 

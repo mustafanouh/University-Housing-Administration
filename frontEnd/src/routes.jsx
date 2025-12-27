@@ -24,6 +24,7 @@ import MaintenanceRequestsTable from "./component/admin/MaintenanceRequestsTable
 import MaintenanceProgress from "./component/admin/MaintenanceProgress";
 import Units from "./component/admin/Units";
 import UnitRooms from "./component/admin/UnitRooms";
+import Storage from "./component/storage/storage";
 function ProtectedRoute({ children }) {
   const cookies = Cookies.get();
   const token = cookies.token;
@@ -46,6 +47,7 @@ export default function AppRoutes() {
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+
 
       <Route
         path="/EmployeesManagement"
@@ -86,6 +88,15 @@ export default function AppRoutes() {
          <UnitRooms />
           </ProtectedRoute>
         }
+      />
+
+      <Route
+      path="/Storage"
+      element={
+        <ProtectedRoute>
+          <Storage />
+        </ProtectedRoute>
+      }
       />
       {/* الصفحات المحمية - يجب تسجيل الدخول للوصول إليها */}
       <Route

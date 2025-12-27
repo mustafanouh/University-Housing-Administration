@@ -10,6 +10,7 @@ import {
   ListItemText,
   Box,
   Typography,
+  MenuItem,
 } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
@@ -27,11 +28,12 @@ import SupportAgent from '@mui/icons-material/SupportAgent';
 import GroupIcon from '@mui/icons-material/Group';
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-
+import StorageIcon from "@mui/icons-material/Storage";
 import { useThemeContext } from '../theme/themeContext';
 import { useNavigateContext } from '../context/navigateContext';
 import { useState } from 'react';
 import MaintenanceRequestsTable from './admin/MaintenanceRequestsTable';
+import { useAuthStore } from '../features/auth/auth.store';
 
 
 
@@ -86,6 +88,29 @@ export default function Drawer({ open, handleDrawerClose }) {
 
   const { mode, colors, primaryColor, language, toggleMode, changeColor, setLanguage } = useThemeContext();
 
+ const {role}=  useAuthStore();
+ const  employeeRoles =role;
+ 
+//  const rolePermissions = {
+//   Storage: [ "storageKeeper"], 
+//   admin:["admin"],            
+//   EmployeesManagement: ["itOffice"], 
+//   Payments: [ "accountant"],       
+//   MaintenanceRequestsTable: ["maintenanceService"],
+//   AccommodationForm: ["mentor"]
+// };
+
+// const filteredMenuItems = menuItems.filter(item => {
+//   const allowedRoles = rolePermissions[item.text];
+//   if (!allowedRoles) return true; 
+//   return employeeRoles.some(role => allowedRoles.includes(role));
+// });
+
+// filteredMenuItems.map(item => (
+//   <MenuItem key={item.index} icon={item.icon} path={item.path}>
+//     {item.text}
+//   </MenuItem>
+// ));
 
 
   const menuItems = [
@@ -98,6 +123,7 @@ export default function Drawer({ open, handleDrawerClose }) {
     { index: 4, text: "Settings", icon: <SettingsOutlinedIcon />, path: "/Settings" },
     { index: 5, text: "Logout", icon: <LogoutOutlinedIcon />, path: "/logout" },
     { index: 8, text: "Units", icon: <ApartmentIcon />, path: "/Units" },
+    { index: 9, text: "Storage", icon: <StorageIcon />, path: "/Storage" },
 
   ];
 
@@ -133,9 +159,9 @@ export default function Drawer({ open, handleDrawerClose }) {
 
       }}>
         {open ? <>
-          <Avatar sx={{ width: 45, height: 45, fontWeight: "bold", border: "6px solid rgba(255,255,255,0.3)", }} >  U  </Avatar>
+          <Avatar sx={{ width: 45, height: 45, mx:"auto", fontWeight: "bold", border: "6px solid rgba(255,255,255,0.3)", }} >  U  </Avatar>
           <Typography sx={{ color: 'blue', mt: 1, textAlign: 'center', translate: -3 }}>Role</Typography>
-          <Typography sx={{ color: colors.iconPrimary }} >Student</Typography> </> :
+          <Typography sx={{ color: colors.iconPrimary }} >{role}</Typography> </> :
           <Avatar sx={{ width: 30, height: 30, fontWeight: "bold", border: "3px solid rgba(255,255,255,0.3)" }}  > X  </Avatar>
 
         }

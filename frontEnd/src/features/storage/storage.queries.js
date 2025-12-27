@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { addStorageItem, updateStorageItem } from "../../api/api";
+import { addStorageItem, getStorageItems, updateStorageItem } from "../../api/api";
 
 
 
@@ -22,18 +22,26 @@ export const useAddStorageItem = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: addStorageItem,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["storage", "items"]);
-    },
+    mutationFn: async(data) => {
+  return await addStorageItem(data);
+},
+onSuccess: () => {
+  queryClient.invalidateQueries(["storage", "items"]);
+},
   });
 };
 
-export const useUpdateStorageItem = () => {
+
+
+
+
+export const useUpdateStorageItem = (data) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: updateStorageItem,
+    mutationFn: async (data) => {
+      return await updateStorageItem(data);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(["storage", "items"]);
     },

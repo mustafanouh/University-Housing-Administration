@@ -18,8 +18,10 @@ export default function UserProfile() {
   const { token, user, role } = useAuthStore(); // user contains newEmployee data
 
   // Combine full name
-  const fullName = `${user?.first_name || ""} ${user?.last_name || ""}`.trim();
+  const fullName = `${user?.firstName || ""} ${user?.lastName || ""}`.trim();
 
+
+   console.log(role);
   return (
     <Box sx={{ p: { xs: 2, md: 4 }, minHeight: "100vh" }}>
       <Card
@@ -75,8 +77,8 @@ export default function UserProfile() {
             {/* Left column */}
             <Grid size={{ xs: 12, md: 6 }}>
               <Stack spacing={3.5}>
-                <InfoRow label="First Name" value={user?.first_name} />
-                <InfoRow label="Last Name" value={user?.last_name} />
+                <InfoRow label="First Name" value={user?.firstName} />
+                <InfoRow label="Last Name" value={user?.lastName} />
                 <InfoRow label="Age" value={user?.age} />
                 <InfoRow label="Specialization" value={user?.specialization} />
               </Stack>
