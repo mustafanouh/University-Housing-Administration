@@ -21,7 +21,7 @@ class StudentController extends Controller
 
     public function housing(Request $request)
     {
-        $exists = $request->user("student")->housingRequest1()->housingRequest1;
+        $exists = $request->user("student")->load("housingRequest1")->housingRequest1;
         if (! $exists) {
             return response()->json(["message" => "clear to send housing request"], 404);
         }

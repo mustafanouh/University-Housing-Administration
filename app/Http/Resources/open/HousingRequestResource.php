@@ -20,10 +20,10 @@ class HousingRequestResource extends JsonResource
         return [
             "id" => $this->id,
             "createdAt" => $this->created_at,
-            "signedBy" => StudentTinyResource::make($this->load("student1")),
-            "roommate1" => StudentTinyResource::make($this->load("student2")),
-            "roommate2" => StudentTinyResource::make($this->load("student3")),
-            "roommate3" => StudentTinyResource::make($this->load("student4"))
+            "signedBy" => StudentTinyResource::make($this->load("student1")->student1),
+            "roommate1" => StudentTinyResource::make($this->load("student2")->student2),
+            "roommate2" => StudentTinyResource::make($this->load("student3")->student3),
+            "roommate3" => StudentTinyResource::make($this->load("student4")->student4)
         ];
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MaintenanceRequest extends Model
 {
+
+    
     protected $fillable = [
         "room_id",
         "cost",
@@ -25,6 +27,6 @@ class MaintenanceRequest extends Model
 
     public function maintenance() {
         return $this->hasOne(Maintenance::class , "maintenance_request_id" , "id");
-    } 
+    }
 
 }

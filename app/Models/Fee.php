@@ -8,6 +8,8 @@ use App\Services\PaymentCodeService;
 
 class Fee extends Model
 {
+
+    protected $table = "fees";
     protected $fillable = [
         "student_id",
         "type",
