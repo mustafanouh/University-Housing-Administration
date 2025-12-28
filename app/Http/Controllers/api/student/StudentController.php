@@ -78,7 +78,7 @@ class StudentController extends Controller
         $validated = $hRequest->validated();
         $students = [];
         foreach ($validated["students"] as $std)
-            $students[] = Student::find($std);
+            $students[] = Student::find($std , "identification_code");
 
         // $existsArray = VerifyHousingRequestService::inQueue($students);
 
@@ -114,7 +114,13 @@ class StudentController extends Controller
             ]);
         }
 
-        HousingRequest::create($validated);
+        HousingRequest::create([
+            "brothers" => $validated["brothers"],
+            "student_1_id" => $request->user("student")->id,
+            "student_2_id" => $validated["student2"],
+            "student_3_id" => $validated["student3"],
+            "student_4_id" => $validated["student4"]
+        ]);
 
         return response()->json([
             "message" => "successfully signed housing request"

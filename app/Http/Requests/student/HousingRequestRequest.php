@@ -24,10 +24,9 @@ class HousingRequestRequest extends FormRequest
     {
         return [
             "brothers" => ["required" , "boolean" , Rule::in([true , false])],
-            "student1" => ["required" , Rule::exists("students" ,"id")],
-            "student2" => ["nullable" , Rule::exists("students" ,"id")],
-            "student3" => ["nullable" , Rule::exists("students" ,"id")],
-            "student4" => ["nullable" , Rule::exists("students" ,"id")],
+            "student2" => ["nullable" , Rule::exists("students" ,"identification_code")],
+            "student3" => ["nullable" , Rule::exists("students" ,"identification_code")],
+            "student4" => ["nullable" , Rule::exists("students" ,"identification_code")],
 
         ];
     }
